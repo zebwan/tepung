@@ -1,0 +1,1 @@
+{ "version": "0.0.1", "configurations": [ { "name": "tepung", "runtimeExecutable": "python3", "runtimeArgs": ["-m","http.server","9712","--directory","/private/tmp/claude-501/-Users-mysense-Desktop/f79d66cf-3d04-4599-a05a-e46351d627a1/scratchpad/tepung"], "port": 9712 } ] }

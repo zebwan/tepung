@@ -1,5 +1,5 @@
 /* ==========================================================================
-   TEPUNG — Bakery & Kopi, Bangsar KL
+   TELAWI CAFE — Bakery & Kopi, Bangsar KL
    Design tokens
    ========================================================================== */
 :root{
@@ -20,6 +20,13 @@
   --accent-soft:#1E6F5033;
   --gold:       #C88A1E;   /* gula melaka */
   --gold-soft:  #F3E1B8;
+
+  /* the fun set — used on tags, eyebrows, ticker words, pins, ambient marks */
+  --c-coral:  #E4572E;
+  --c-sky:    #3E8FB8;
+  --c-butter: #EFB93F;
+  --c-berry:  #C8457B;
+  --c-jade:   #1E6F50;
 
   /* tag pastels */
   --tag-green:  #D7E7D2;
@@ -52,8 +59,13 @@ body{
   margin:0;
   background-color:var(--paper);
   background-image:
+    radial-gradient(circle at 20px 20px,   rgba(228,87,46,.20)  1.8px, transparent 2px),
+    radial-gradient(circle at 100px 60px,  rgba(62,143,184,.20) 1.8px, transparent 2px),
+    radial-gradient(circle at 60px 140px,  rgba(239,185,63,.26) 1.8px, transparent 2px),
+    radial-gradient(circle at 140px 100px, rgba(200,69,123,.16) 1.8px, transparent 2px),
     repeating-linear-gradient(0deg,  rgba(30,111,80,.075) 0 1px, transparent 1px 40px),
     repeating-linear-gradient(90deg, rgba(30,111,80,.075) 0 1px, transparent 1px 40px);
+  background-size:200px 200px,200px 200px,200px 200px,200px 200px,auto,auto;
   color:var(--ink);
   font-family:var(--ui);
   font-size:16px;
@@ -87,6 +99,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   font-size:clamp(15px,1.5vw,19px);letter-spacing:.02em;color:var(--ink);
 }
 .eyebrow--accent{color:var(--accent)}
+.sec:nth-of-type(odd)  .eyebrow--accent{color:var(--c-coral)}
+#room  .eyebrow--accent{color:var(--c-sky)}
+#about .eyebrow--accent{color:var(--c-berry)}
+#crew  .eyebrow--accent{color:var(--gold)}
+#visit .eyebrow--accent{color:var(--c-jade)}
 .lede{font-size:clamp(15px,1.35vw,17px);color:var(--muted);line-height:1.6}
 
 .h1{font-size:clamp(44px,8.2vw,112px)}
@@ -139,6 +156,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   text-transform:lowercase;letter-spacing:.005em;color:var(--accent);
   position:relative;top:1px;
 }
+/* the "cafe" half rides small and quiet beside the name */
+.nav__logo i,.foot-cta__mark i,.front__mark i,.hero__mark i{
+  font-style:normal;font-family:var(--ui);font-weight:700;
+  font-size:.42em;letter-spacing:.14em;text-transform:uppercase;
+  align-self:center;opacity:.72;margin-left:-2px;
+}
+.nav__logo i{font-size:10px;letter-spacing:.13em;margin-left:1px;position:relative;top:1px}
 
 /* ==========================================================================
    Hero
@@ -211,9 +235,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   padding:5px 13px;border-radius:999px;background:var(--accent);color:#fff;
   border:1.5px solid var(--card);
 }
-.card__tag[data-tone="new"]{background:var(--gold);color:#fff}
-.card__tag[data-tone="veg"]{background:var(--tag-green);color:var(--accent-dk)}
-.card__tag[data-tone="halal"]{background:var(--tag-blue);color:#2C4A63}
+.card__tag{background:var(--c-coral)}
+.card__tag[data-tone="new"]{background:var(--c-butter);color:#3A2A05}
+.card__tag[data-tone="veg"]{background:var(--c-jade);color:#fff}
+.card__tag[data-tone="halal"]{background:var(--c-sky);color:#fff}
 .card__row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:16px 12px 0}
 .card__row h3{font-size:19px;font-weight:600;line-height:1.3}
 .card__price{font-family:var(--display);font-weight:900;font-size:22px;color:var(--accent);white-space:nowrap}
@@ -255,6 +280,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 }
 .front__mark svg{width:clamp(34px,4vw,54px);height:clamp(34px,4vw,54px)}
 .front__mark b{font-family:var(--display);font-weight:900;font-size:clamp(40px,5.6vw,78px);line-height:1;text-transform:lowercase}
+.front__mark i{font-size:clamp(11px,1.3vw,18px);letter-spacing:.2em}
 
 /* ==========================================================================
    Team
@@ -270,6 +296,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .polaroid:nth-child(3n+3){transform:rotate(-.4deg)}
 .polaroid:hover{transform:rotate(0) translateY(-7px);box-shadow:0 20px 44px rgba(20,23,15,.13)}
 .polaroid::before{content:"";position:absolute;left:50%;top:-6px;width:11px;height:11px;border-radius:50%;background:var(--accent);transform:translateX(-50%);box-shadow:0 2px 5px rgba(20,23,15,.25)}
+.polaroid:nth-child(1)::before{background:var(--c-coral)}
+.polaroid:nth-child(2)::before{background:var(--c-sky)}
+.polaroid:nth-child(3)::before{background:var(--c-butter)}
+.polaroid:nth-child(4)::before{background:var(--c-berry)}
+.polaroid:nth-child(5)::before{background:var(--c-jade)}
+.polaroid:nth-child(6)::before{background:var(--gold)}
 .polaroid__media{overflow:hidden;border-radius:2px;aspect-ratio:4/4.6}
 .polaroid__media img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
 .polaroid:hover .polaroid__media img{transform:scale(1.045)}
@@ -304,6 +336,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .foot-cta__mark{display:inline-flex;align-items:center;gap:8px;color:var(--accent);margin-bottom:14px}
 .foot-cta__mark svg{width:28px;height:28px}
 .foot-cta__mark b{font-family:var(--display);font-weight:900;font-size:29px;line-height:1;text-transform:lowercase}
+.foot-cta__mark i{font-size:11px}
 .foot-cta .h2{margin-bottom:clamp(22px,2.6vw,34px)}
 
 .foot-nav{border-top:1.5px solid rgba(20,23,15,.10);padding:clamp(26px,3vw,40px) 0;text-align:center;display:grid;gap:14px;justify-items:center}
@@ -496,6 +529,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* ---- ticker leans with scroll velocity --------------------------------- */
 .ticker__track{transform-origin:50% 50%}
 .ticker span{display:inline-block;transform:skewX(var(--lean,0deg));transition:none}
+.ticker span:nth-child(4n+1){color:#FFFDF6}
+.ticker span:nth-child(4n+3){color:#F7E4A6}
+.ticker span:nth-child(4n+5){color:#F9C8AE}
+.ticker span:nth-child(4n+7){color:#C3E4D3}
 
 /* ---- buttons: fill wipes up from the base ------------------------------ */
 .btn{position:relative;overflow:hidden;z-index:0}
@@ -516,3 +553,33 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   .nav::after{display:none}
   .btn::before{display:none}
 }
+
+/* ---- menu page: a colour per category ---------------------------------- */
+#kopi       .menu-group__title{color:var(--gold)}
+#cold       .menu-group__title{color:var(--c-sky)}
+#nonkopi    .menu-group__title{color:var(--c-berry)}
+#breakfast  .menu-group__title{color:var(--c-coral)}
+#bakery     .menu-group__title{color:var(--gold)}
+#brunch     .menu-group__title{color:var(--c-jade)}
+#sweets     .menu-group__title{color:var(--c-berry)}
+.chip.on{background:var(--accent);border-color:var(--accent)}
+#kopi-chip.on,.chip[data-target="kopi"].on{background:var(--gold);border-color:var(--gold)}
+.chip[data-target="cold"].on{background:var(--c-sky);border-color:var(--c-sky)}
+.chip[data-target="nonkopi"].on{background:var(--c-berry);border-color:var(--c-berry)}
+.chip[data-target="breakfast"].on{background:var(--c-coral);border-color:var(--c-coral)}
+.chip[data-target="bakery"].on{background:var(--gold);border-color:var(--gold)}
+.chip[data-target="brunch"].on{background:var(--c-jade);border-color:var(--c-jade)}
+.chip[data-target="sweets"].on{background:var(--c-berry);border-color:var(--c-berry)}
+
+/* ---- ambient background marks ----------------------------------------- */
+.amb{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.amb__i{position:absolute;will-change:transform}
+.amb__i svg{width:100%;height:auto;display:block}
+.amb__f{display:block;animation:ambFloat var(--dur,9s) ease-in-out infinite alternate}
+@keyframes ambFloat{
+  from{transform:translateY(0) rotate(var(--r0,-6deg))}
+  to  {transform:translateY(-16px) rotate(var(--r1,8deg))}
+}
+.sec,.sec--tight,.hero{position:relative}
+.sec>.wrap,.sec--tight>.wrap{position:relative;z-index:1}
+@media (prefers-reduced-motion:reduce){ .amb__f{animation:none} }

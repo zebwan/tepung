@@ -79,4 +79,25 @@
       <path d="M364 114l-16-12M364 114l2-20"/>
     </g>
   </symbol>
+
+  <symbol id="i-bean" viewBox="0 0 40 28">
+    <g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+      <ellipse cx="20" cy="14" rx="17" ry="11"/>
+      <path d="M7 8c8 4 14 8 19 14"/>
+    </g>
+  </symbol>
+  <symbol id="i-spark" viewBox="0 0 40 40">
+    <g fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round">
+      <path d="M20 3v12M20 25v12M3 20h12M25 20h12"/>
+      <path d="M9 9l6 6M25 25l6 6M31 9l-6 6M15 25l-6 6"/>
+    </g>
+  </symbol>
+  <symbol id="i-steam" viewBox="0 0 28 44">
+    <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+      <path d="M14 41c6-5 6-10 0-15s-6-10 0-15S20 6 14 2"/>
+    </g>
+  </symbol>
+  <symbol id="i-squig" viewBox="0 0 60 20">
+    <path d="M2 14c6-10 12-10 18 0s12 10 18 0 10-8 12-4" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+  </symbol>
 </svg>

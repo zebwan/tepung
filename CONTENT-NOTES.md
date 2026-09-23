@@ -1,4 +1,4 @@
-# TEPUNG — bakery & kopi, Bangsar KL
+# TELAWI CAFE — bakery & kopi, Bangsar KL
 
 A concept site built as an original re-skin of the layout system used by the
 `boolka.framer.website` Framer template. Same structural bones and motion
@@ -8,7 +8,7 @@ Two pages, plain static HTML. No build step, no dependencies. Open `index.html`
 in a browser, or drop the folder on any static host.
 
 ```
-tepung/
+telawi-cafe/
   index.html          home
   menu.html           full menu, 7 categories
   assets/css/style.css
@@ -27,7 +27,7 @@ project, every line in this section needs replacing with something true.
 
 | Item | Placeholder used | Status |
 |---|---|---|
-| Brand name | Tepung (Malay for *flour*) | INVENTED — not trademark-checked |
+| Brand name | Telawi Cafe, after Jalan Telawi | INVENTED — **not trademark-checked, and it borrows a real street name**, so check before any real use |
 | Address | 12 Jalan Telawi 3, Bangsar Baru, 59100 Kuala Lumpur | INVENTED lot number on a real street |
 | Hours | Every day, 7.30am – 7pm | INVENTED |
 | Phone / WhatsApp | +60 12-345 6789 | INVENTED, non-working number |
@@ -151,6 +151,7 @@ is what makes the grid read as one place.
 | Hero, room, storefront | `hero.webp`, `room.webp`, `storefront.webp` |
 | Crew | `crew-aisyah`, `crew-faiz`, `crew-meiling`, `crew-arjun`, `crew-nadia`, `crew-hafiz` |
 | Favourites | `fav-kaya-toast`, `fav-nasi-lemak`, `fav-roti-canai`, `fav-curry-puff`, `fav-croissant`, `fav-pandan-loaf` |
+| Menu items | `menu-kopi-o`, `menu-teh-tarik`, `menu-satay-bowl`, `menu-milo-dinosaur` … 28 in all |
 
 2K originals are in `assets/img/_masters/` (73MB). **Gitignored — never deploy
 them.** Re-crop from there rather than re-generating if a size changes.
@@ -170,3 +171,53 @@ If you add more stock, take URLs from `images.unsplash.com/...` and avoid
   band still carries a large one.
 - Hero and room captions sit in opaque cream cards rather than on darkened
   photos, so nothing tints the photography.
+
+
+---
+
+## Round 2 — 23 Sep 2026
+
+**Renamed Tepung → Telawi Cafe.** "Tepung" (flour) read as an ingredient, not a
+café. Telawi is the street it sits on, which is how real cafés name themselves.
+The wordmark is two parts: **telawi** in Londrina Solid, with a small
+letterspaced **CAFE** beside it.
+
+**28 more generated images.** The whole menu page is now generated rather than
+stock, on the same room and the same crockery. One gap: **Sambal scrambled eggs
+was never generated** and still sits on its Unsplash placeholder — the prompt is
+in the shot list if you want it.
+
+### The framing problem, and the fix
+Every one of the 28 came back as a **wide room shot with a tiny dish** — the room
+bible pulled the camera back. Rather than re-run 2,200 credits, they were cropped
+to the subject: a saliency detector (relative saturation, with green-dominant
+pixels suppressed so it wouldn't lock onto the tile wall, weighted toward the
+lower-centre foreground) finds the dish, then a 4:3 box is cut around it.
+Tall glasses needed explicit headroom or they lost their tops — the per-vessel
+overrides live in the `TWEAK` table in the crop script.
+
+**If you ever regenerate these, add a framing line to the prompt**: the room
+bible alone will always produce a wide shot.
+
+### Colour
+Pandan green is still the anchor because it is physically in every photograph,
+but a fun set now runs across the furniture:
+
+| Token | Hex | Where |
+|---|---|---|
+| `--c-coral` | `#E4572E` | BESTSELLER tags, favourites eyebrow, pins |
+| `--c-sky` | `#3E8FB8` | halal tags, the room eyebrow, Cold category |
+| `--c-butter` | `#EFB93F` | NEW tags, pins, ticker tints |
+| `--c-berry` | `#C8457B` | about eyebrow, Not-kopi and Sweets categories |
+| `--c-jade` | `#1E6F50` | the anchor, vegetarian tags, Brunch |
+| `--gold` | `#C88A1E` | crew eyebrow, Kopi and Bakery categories |
+
+Each menu category has its own colour, its chip lights up in that colour, and
+the ticker words cycle four tints against the green band.
+
+### Ambient background detail
+15 small line-art marks (bean, sparkle, steam curl, squiggle) scattered behind
+the sections in six colours. Each floats on a slow CSS loop and drifts as its
+section crosses the viewport. Geometry is cached on load and resize so the
+scroll handler never reads layout, and off-screen marks are skipped.
+`prefers-reduced-motion` removes the motion entirely.

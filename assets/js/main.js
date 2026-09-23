@@ -1,7 +1,9 @@
-/* Tepung — interactions
+/* Telawi Cafe — interactions
    1. scroll reveals   2. marquee speed   3. menu filters   4. nav shadow on scroll */
 (function () {
   'use strict';
+
+  var ambItems = [];   /* background marks; filled in further down */
 
   /* ---------- 1. reveal on scroll ---------------------------------------- */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -254,6 +256,7 @@
       par.style.transform = 'translate3d(0,' + (p * 6).toFixed(2) + '%,0)';
     }
     if (pending.length) sweepReveals();
+    if (ambItems.length) driftAmb(y);
     if (tracks.length) {
       var target = Math.max(-1.1, Math.min(1.1, (velocity || 0) / 26));
       lean += (target - lean) * 0.18;
@@ -272,5 +275,77 @@
     }, { passive: true });
   }
   onScroll(window.pageYOffset || 0, 0);
+
+
+  /* ---------- 7. ambient background marks -------------------------------
+     A few small line-art marks scattered behind each section: they float on
+     a slow loop and drift a little as the section passes through the
+     viewport. Purely decorative, so aria-hidden and pointer-events:none. */
+  var AMB_SHAPES = [
+    { id: 'i-bean',  vb: '0 0 40 28', w: 34 },
+    { id: 'i-spark', vb: '0 0 40 40', w: 28 },
+    { id: 'i-steam', vb: '0 0 28 44', w: 22 },
+    { id: 'i-squig', vb: '0 0 60 20', w: 52 },
+    { id: 'i-bean',  vb: '0 0 40 28', w: 24 },
+    { id: 'i-spark', vb: '0 0 40 40', w: 36 }
+  ];
+  var AMB_COLOURS = ['var(--c-coral)','var(--c-sky)','var(--c-butter)',
+                     'var(--c-berry)','var(--c-jade)','var(--gold)'];
+  /* left%, top%, amplitude — kept away from the middle where the copy sits */
+  var AMB_SPOTS = [
+    [3.5, 14, 26], [93, 22, -30], [6, 72, -22],
+    [90, 78, 24],  [15, 92, 18],  [80, 8, -18]
+  ];
+
+  if (!reduced) {
+    var secs = document.querySelectorAll('.sec, .sec--tight');
+    Array.prototype.forEach.call(secs, function (sec, si) {
+      var layer = document.createElement('div');
+      layer.className = 'amb';
+      layer.setAttribute('aria-hidden', 'true');
+      var n = 2 + (si % 2);                      /* 2 or 3 per section */
+      for (var k = 0; k < n; k++) {
+        var pick = (si * 3 + k) % AMB_SHAPES.length;
+        var sh = AMB_SHAPES[pick];
+        var sp = AMB_SPOTS[(si * 2 + k) % AMB_SPOTS.length];
+        var outer = document.createElement('span');
+        outer.className = 'amb__i';
+        outer.style.cssText = 'left:' + sp[0] + '%;top:' + sp[1] + '%;width:' + sh.w + 'px;' +
+                              'color:' + AMB_COLOURS[(si + k) % AMB_COLOURS.length] + ';' +
+                              'opacity:' + (0.13 + (k % 3) * 0.045).toFixed(3);
+        var inner = document.createElement('span');
+        inner.className = 'amb__f';
+        inner.style.setProperty('--dur', (7.5 + ((si + k) % 5) * 1.3) + 's');
+        inner.style.setProperty('--r0', (-10 + k * 5) + 'deg');
+        inner.style.setProperty('--r1', (7 + k * 4) + 'deg');
+        inner.innerHTML = '<svg viewBox="' + sh.vb + '"><use href="#' + sh.id + '"></use></svg>';
+        outer.appendChild(inner);
+        layer.appendChild(outer);
+        ambItems.push({ el: outer, sec: sec, amp: sp[2] });
+      }
+      sec.insertBefore(layer, sec.firstChild);
+    });
+
+    /* cache geometry so the scroll handler never reads layout */
+    var measureAmb = function () {
+      ambItems.forEach(function (it) {
+        it.top = it.sec.offsetTop;
+        it.h = it.sec.offsetHeight;
+      });
+    };
+    measureAmb();
+    window.addEventListener('resize', measureAmb);
+  }
+
+  function driftAmb(y) {
+    var vh = window.innerHeight;
+    for (var i = 0; i < ambItems.length; i++) {
+      var it = ambItems[i];
+      var p = (y + vh - it.top) / (vh + it.h);      /* 0 entering, 1 leaving */
+      if (p < -0.3 || p > 1.3) continue;
+      var off = (Math.min(Math.max(p, 0), 1) - 0.5) * 2 * it.amp;
+      it.el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0)';
+    }
+  }
 
 })();
